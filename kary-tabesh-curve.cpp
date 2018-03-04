@@ -77,20 +77,19 @@
 //
 
     bool lines_are_intesecting( Line a, Line b ) {
-        const auto p1 =
-            a.start;
-        const auto p2 =
-            a.end;
-        const auto q1 =
-            b.start;
-        const auto q2 =
-            b.end;
+        const auto first_condition =
+            ( ( ( b.start.x - a.start.x ) * ( a.end.y - a.start.y )
+                - ( b.start.y - a.start.y ) * ( a.end.x-a.start.x ) )
+              * ( ( b.end.x - a.start.x ) * ( a.end.y - a.start.y )
+                - ( b.end.y - a.start.y ) * ( a.end.x - a.start.x ) ) < 0 );
 
-        return (((q1.x-p1.x)*(p2.y-p1.y) - (q1.y-p1.y)*(p2.x-p1.x))
-                * ((q2.x-p1.x)*(p2.y-p1.y) - (q2.y-p1.y)*(p2.x-p1.x)) < 0)
-                &&
-            (((p1.x-q1.x)*(q2.y-q1.y) - (p1.y-q1.y)*(q2.x-q1.x))
-                * ((p2.x-q1.x)*(q2.y-q1.y) - (p2.y-q1.y)*(q2.x-q1.x)) < 0);
+        const auto second_condition =
+            ( ( ( a.start.x - b.start.x ) * ( b.end.y-b.start.y )
+                - ( a.start.y - b.start.y ) * ( b.end.x-b.start.x ) )
+              * ( ( a.end.x - b.start.x ) * ( b.end.y - b.start.y )
+                - ( a.end.y - b.start.y ) * ( b.end.x - b.start.x ) ) < 0 );
+
+        return first_condition && second_condition;
     }
 
 
@@ -111,32 +110,22 @@
     }
 
 //
-// ─── CREATE TRIANGLE BASED ON THE FORMULA ───────────────────────────────────────
-//
-
-    void test_pixels_with_the_formula ( ) {
-        glColor4f( 1.0f , 0.0f , 0.0f, 0.3f );
-        for ( float x = 0; x < screen_width; x++ ) {
-            glBegin( GL_POINTS );
-                for ( float y = 0; y < screen_height; y++ ) {
-                    const struct Point point =
-                        { x, y };
-
-                    if ( test_interpolation_using_kary_tabesh_curve( point ) ) {
-                        glVertex2f( point.x, point.y );
-                    }
-                }
-            glEnd( );
-            glFlush( );
-        }
-    }
-
-//
 // ─── DISPLAY VIEW ───────────────────────────────────────────────────────────────
 //
 
     void display ( ) {
-        test_pixels_with_the_formula( );
+        glColor4f( 1.0f , 0.0f , 0.0f, 0.3f );
+        glBegin( GL_POINTS );
+            for ( float x = 0; x < screen_width; x++ ) {
+                for ( float y = 0; y < screen_height; y++ ) {
+                    const struct Point point =
+                        { x, y };
+
+                    if ( test_interpolation_using_kary_tabesh_curve( point ) )
+                        glVertex2f( point.x, point.y );
+                }
+            }
+        glEnd( );
         glFlush( );
     }
 
