@@ -78,16 +78,16 @@
 
     bool lines_are_intesecting( Line a, Line b ) {
         const auto first_condition =
-            ( ( ( b.start.x - a.start.x ) * ( a.end.y - a.start.y )
-                - ( b.start.y - a.start.y ) * ( a.end.x-a.start.x ) )
-              * ( ( b.end.x - a.start.x ) * ( a.end.y - a.start.y )
-                - ( b.end.y - a.start.y ) * ( a.end.x - a.start.x ) ) < 0 );
+            (   ( ( b.start.x - a.start.x ) * ( a.end.y - a.start.y )
+                - ( b.start.y - a.start.y ) * ( a.end.x - a.start.x ) )
+              * ( ( b.end.x   - a.start.x ) * ( a.end.y - a.start.y )
+                - ( b.end.y   - a.start.y ) * ( a.end.x - a.start.x ) ) < 0 );
 
         const auto second_condition =
-            ( ( ( a.start.x - b.start.x ) * ( b.end.y-b.start.y )
-                - ( a.start.y - b.start.y ) * ( b.end.x-b.start.x ) )
-              * ( ( a.end.x - b.start.x ) * ( b.end.y - b.start.y )
-                - ( a.end.y - b.start.y ) * ( b.end.x - b.start.x ) ) < 0 );
+            (   ( ( a.start.x - b.start.x ) * ( b.end.y - b.start.y )
+                - ( a.start.y - b.start.y ) * ( b.end.x - b.start.x ) )
+              * ( ( a.end.x   - b.start.x ) * ( b.end.y - b.start.y )
+                - ( a.end.y   - b.start.y ) * ( b.end.x - b.start.x ) ) < 0 );
 
         return first_condition && second_condition;
     }
