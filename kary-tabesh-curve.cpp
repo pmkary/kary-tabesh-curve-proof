@@ -50,26 +50,26 @@
         500;
 
     // triangle
-    struct Point topPosition =
+    const struct Point topPosition =
         { 400, 100 };
-    struct Point bottomLeftPosition =
+    const struct Point bottomLeftPosition =
         { 300, 400 };
-    struct Point bottomRightPosition =
+    const struct Point bottomRightPosition =
         { 600, 350 };
 
     // trangle edges
-    struct Line edge1 =
+    const struct Line edge1 =
         { topPosition, bottomLeftPosition };
-    struct Line edge2 =
+    const struct Line edge2 =
         { bottomLeftPosition, bottomRightPosition };
-    struct Line edge3 =
+    const struct Line edge3 =
         { bottomRightPosition, topPosition };
 
     const std::vector<Line> edges =
         { edge1, edge2, edge3 };
 
     // origin
-    struct Point origin =
+    const struct Point origin =
         { 0, 0 };
 
 //
@@ -119,7 +119,7 @@
         for ( float x = 0; x < screen_width; x++ ) {
             glBegin( GL_POINTS );
                 for ( float y = 0; y < screen_height; y++ ) {
-                    struct Point point =
+                    const struct Point point =
                         { x, y };
 
                     if ( test_interpolation_using_kary_tabesh_curve( point ) ) {
